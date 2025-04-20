@@ -46,6 +46,6 @@ RUN pip install --no-cache-dir playwright \
 
 COPY . .
 
-EXPOSE 8080
+EXPOSE 10000
 
 CMD ["python", "api/app.py"]
