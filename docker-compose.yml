@@ -1,0 +1,16 @@
+services:
+  api:
+    build:
+      context: .
+    container_name: flask_api
+    command: python api/app.py
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "8080:8080"
+    environment:
+      - FLASK_ENV=development
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+    tty: true

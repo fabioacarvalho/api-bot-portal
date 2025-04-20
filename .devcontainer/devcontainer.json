@@ -1,0 +1,19 @@
+{
+    "name": "Standalone Python DevContainer",
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
+    "settings": {
+      "terminal.integrated.defaultProfile.linux": "bash"
+    },
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "ms-python.python",
+          "ms-python.vscode-pylance"
+        ]
+      }
+    },
+    "postCreateCommand": "pip install --upgrade pip",
+    "remoteUser": "vscode"
+  }
