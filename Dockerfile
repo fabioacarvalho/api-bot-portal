@@ -46,6 +46,7 @@ RUN pip install --no-cache-dir playwright \
 
 COPY . .
 
-EXPOSE 10000
+# Porta rodando no RENDER
+EXPOSE 10000  
 
 CMD ["python", "api/app.py"]
