@@ -56,7 +56,6 @@ class AutomationService:
                         nome_completo = valor
 
         _href = soup.find("a", {"id": "btnDetalharBpc"})
-        # detalhes = self.scrape_table_from_href(_href.attrs["href"]) if _href else []
 
         date = datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -69,8 +68,8 @@ class AutomationService:
             "screenshot": {
                 "filename": filename,
                 "base64_image": screenshot
-            }
-            # "detalhes": detalhes
+            },
+            "detalhes": []
         }
 
         # Salvar no JSON
@@ -224,35 +223,6 @@ class AutomationService:
             browser.close()
             return dict(html=html, screenshot=_screenshot['screenshot'], filename=_screenshot['filename'])
 
-
-    def scrape_table_from_href(self, href: str) -> list[dict]:
-        url = f"https://portaldatransparencia.gov.br{href}?ordenarPor=mesFolha&direcao=desc"
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-                        '(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
-        }
-        response = requests.get(url=url, headers=headers)
-        response.raise_for_status()
-
-        soup = BeautifulSoup(response.text, 'html.parser')
-
-        table = soup.find('table', {'id': 'tabelaDetalhe'})
-        if not table:
-            raise ValueError("Nenhuma tabela encontrada na página.")
-
-        headers = [th.text.strip() for th in table.find_all('th')]
-        if not headers:
-            raise ValueError("A tabela não possui cabeçalhos (th).")
-
-        data = []
-        for row in table.find_all('tr')[1:]:  # Pula o cabeçalho
-            cells = [td.text.strip() for td in row.find_all(['td', 'th'])]
-            if len(cells) == len(headers):
-                data.append(dict(zip(headers, cells)))
-            else:
-                continue
-
-        return data
 
     def run(self, input_value: str):
         try:
